@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Brand;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
+use App\Http\Resources\BrandResource;
+use App\Http\Controllers\Controller;
 
 class BrandController extends Controller
 {
@@ -13,7 +15,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        return BrandResource::collection(Brand::paginate(10));
     }
 
     /**
@@ -37,7 +39,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        //
+        return new BrandResource($brand);
     }
 
     /**

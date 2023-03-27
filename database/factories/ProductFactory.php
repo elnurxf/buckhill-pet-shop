@@ -27,7 +27,7 @@ class ProductFactory extends Factory
             'category_uuid' => $category->uuid,
             'title'         => substr($this->faker->sentence(5), 0, -1), // remove dot at the end
             'price'         => $this->faker->randomFloat(2, 20, 100),
-            'description'   => $this->faker->text,
+            'description'   => $this->faker->text(),
             'metadata'      => [
                 'brand' => $brand->uuid,
                 'image' => $image->uuid,

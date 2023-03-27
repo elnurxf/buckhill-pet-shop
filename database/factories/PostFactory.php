@@ -16,8 +16,15 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $image = File::inRandomOrder()->first();
+
         return [
-            //
+            'title'    => $this->faker->sentence(15),
+            'content'  => $this->faker->text(),
+            'metadata' => [
+                'author' => $brand->name(),
+                'image'  => $image->uuid,
+            ],
         ];
     }
 }

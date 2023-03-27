@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             FileSeeder::class,
             ProductSeeder::class,
             OrderStatusSeeder::class,
+            PostSeeder::class,
         ]);
 
     }

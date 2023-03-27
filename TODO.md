@@ -8,6 +8,7 @@ Required packages:
 	nunomaduro/phpinsights
 	darkaonline/l5-swagger
 	propaganistas/laravel-phone
+	spatie/laravel-sluggable
 
 Modeling (Migrations, Seeds, Indexes)
 Controllers

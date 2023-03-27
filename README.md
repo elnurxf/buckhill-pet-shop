@@ -12,10 +12,11 @@ git@github.com:elnurxf/buckhill-pet-shop.git
 
 ## Installation
 
-Install dependicies, setup .env file and run migrations and seed database
+Copy .env.example to .env file, set DB credentials and run migrations and seed database
 
 ```bash
 composer install
+php artisan key:generate
 php artisan migrate:fresh --seed
 ```
 

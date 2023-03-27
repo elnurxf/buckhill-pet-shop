@@ -67,27 +67,33 @@ class Handler extends ExceptionHandler
             if ($exception instanceof NotFoundHttpException) {
                 return new JsonResponse([
                     'success' => false,
+                    'data'    => [],
                     'code'    => Response::HTTP_NOT_FOUND,
                     'error'   => __('Endpoint not found'),
-                    'trace' => config('app.debug') ? $exception->getTrace() : [],
+                    'errors'  => [],
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
                 ], Response::HTTP_NOT_FOUND);
             }
 
             if ($exception instanceof ModelNotFoundException) {
                 return new JsonResponse([
                     'success' => false,
+                    'data'    => [],
                     'code'    => Response::HTTP_NOT_FOUND,
                     'error'   => __('Record not found'),
-                    'trace' => config('app.debug') ? $exception->getTrace() : [],
+                    'errors'  => [],
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
                 ], Response::HTTP_NOT_FOUND);
             }
 
             if ($exception instanceof AccessDeniedHttpException) {
                 return new JsonResponse([
                     'success' => false,
+                    'data'    => [],
                     'code'    => Response::HTTP_FORBIDDEN,
                     'error'   => __('You don`t have access to this route'),
-                    'trace' => config('app.debug') ? $exception->getTrace() : [],
+                    'errors'  => [],
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
                 ], Response::HTTP_FORBIDDEN);
             }
 
@@ -95,18 +101,20 @@ class Handler extends ExceptionHandler
                 return new JsonResponse([
                     'success' => false,
                     'code'    => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'errors'  => $exception->errors(),
                     'error'   => __('Validation exception'),
-                    'trace' => config('app.debug') ? $exception->getTrace() : [],
+                    'errors'  => $exception->errors(),
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             if ($exception instanceof AuthenticationException) {
                 return new JsonResponse([
                     'success' => false,
+                    'data'    => [],
                     'code'    => Response::HTTP_UNAUTHORIZED,
                     'error'   => __('Unauthenticated'),
-                    'trace' => config('app.debug') ? $exception->getTrace() : [],
+                    'errors'  => [],
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
                 ], Response::HTTP_UNAUTHORIZED);
             }
         }

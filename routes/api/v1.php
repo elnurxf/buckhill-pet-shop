@@ -29,4 +29,4 @@ Route::get('/', function () {
 
 Route::get('brands', [BrandController::class, 'index']);
 Route::post('brand/create', [BrandController::class, 'store']);
-Route::get('brands/{brand}', [BrandController::class, 'show']);
+Route::get('brand/{brand}', [BrandController::class, 'show']);

@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,19 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $category = Category::inRandomOrder()->first();
+        $brand    = Brand::inRandomOrder()->first();
+        $image    = File::inRandomOrder()->first();
+
         return [
-            //
+            'category_uuid' => $category->uuid,
+            'title'         => substr($this->faker->sentence(5), 0, -1), // remove dot at the end
+            'price'         => $this->faker->randomFloat(2, 20, 100),
+            'description'   => $this->faker->text,
+            'metadata'      => [
+                'brand' => $brand->uuid,
+                'image' => $image->uuid,
+            ],
         ];
     }
 }

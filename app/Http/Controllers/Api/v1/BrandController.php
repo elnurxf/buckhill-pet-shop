@@ -41,7 +41,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        return new BrandResource($brand);
+        return BrandResource::make($brand);
     }
 
     /**
@@ -49,7 +49,11 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        //
+        $validated = $request->validated();
+
+        $brand->update($validated);
+
+        return BrandResource::make($brand);
     }
 
     /**
@@ -57,6 +61,13 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        return new JsonResponse([
+            'success' => true,
+            'error'   => null,
+            'errors'  => [],
+            'extra'   => [],
+        ], Response::HTTP_OK);
     }
 }

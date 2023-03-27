@@ -17,12 +17,8 @@ class BrandFactory extends Factory
      */
     public function definition(): array
     {
-        // ToDo: use spatie/laravel-sluggable
-        $title = $this->faker->company();
-
         return [
-            'title' => $title,
-            'slug'  => Str::slug($title),
+            'title' => $this->faker->company(),
         ];
     }
 }

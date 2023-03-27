@@ -17,7 +17,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => substr($this->faker->sentence(2), 0, -1), // remove dot at the end
         ];
     }
 }

@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Models\Brand;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\BrandResource;
-use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BrandResource::collection(Brand::paginate(10));
+        $limit = $request->filled('limit') ? $request->get('limit') : 10;
+
+        return BrandResource::collection(
+            Brand::sortable($request)->paginate((int) $limit)
+        );
     }
 
     /**

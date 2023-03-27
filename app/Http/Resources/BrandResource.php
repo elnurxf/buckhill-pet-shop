@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BrandResource extends JsonResource
 {
+    public static $wrap = 'data';
+
     /**
      * Transform the resource into an array.
      *
@@ -24,5 +26,15 @@ class BrandResource extends JsonResource
 
         //return parent::toArray($request);
 
+    }
+
+    public function with(Request $request): array
+    {
+        return [
+            'success' => true,
+            'error'   => null,
+            'errors'  => [],
+            'extra'   => [],
+        ];
     }
 }

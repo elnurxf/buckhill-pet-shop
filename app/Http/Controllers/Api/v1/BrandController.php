@@ -17,6 +17,7 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $limit = $request->filled('limit') ? $request->get('limit') : 10;
+        $limit = abs(min($limit, 50));
 
         return BrandResource::collection(
             Brand::sortable($request)->paginate((int) $limit)

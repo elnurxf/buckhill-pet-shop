@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index();
+            $table->string('title');
+            $table->text('content');
+            $table->json('metadata');
             $table->timestamps();
         });
     }

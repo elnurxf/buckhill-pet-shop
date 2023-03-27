@@ -21,7 +21,7 @@ class FileFactory extends Factory
 
         return [
             'name' => $name,
-            'path' => 'products/' . $name,
+            'path' => 'media/' . $name,
             'size' => $this->faker->randomNumber(4, true),
             'type' => 'image/jpeg',
         ];

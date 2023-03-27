@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,16 @@ class PromotionFactory extends Factory
      */
     public function definition(): array
     {
+        $image = File::inRandomOrder()->first();
+
         return [
-            //
+            'title'    => $this->faker->sentence(15),
+            'content'  => $this->faker->text(),
+            'metadata' => [
+                'image'      => $image->uuid,
+                'valid_from' => now()->toDateString(),
+                'valid_to'   => now()->addMonth()->toDateString(),
+            ],
         ];
     }
 }

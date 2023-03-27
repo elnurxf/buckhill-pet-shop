@@ -30,3 +30,5 @@ Route::get('/', function () {
 Route::get('brands', [BrandController::class, 'index']);
 Route::post('brand/create', [BrandController::class, 'store']);
 Route::get('brand/{brand}', [BrandController::class, 'show']);
+Route::put('brand/{brand}', [BrandController::class, 'update']);
+Route::delete('brand/{brand}', [BrandController::class, 'destroy']);

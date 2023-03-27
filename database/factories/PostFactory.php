@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -22,7 +23,7 @@ class PostFactory extends Factory
             'title'    => $this->faker->sentence(15),
             'content'  => $this->faker->text(),
             'metadata' => [
-                'author' => $brand->name(),
+                'author' => $this->faker->name(),
                 'image'  => $image->uuid,
             ],
         ];

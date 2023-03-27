@@ -19,6 +19,10 @@ class Post extends Model
         'metadata'
     ];
 
+    protected $casts = [
+        'metadata' => 'json',
+    ];
+
     /**
      * Get the options for generating the slug.
      */

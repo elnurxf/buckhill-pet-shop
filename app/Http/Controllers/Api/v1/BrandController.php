@@ -20,16 +20,8 @@ class BrandController extends Controller
         $limit = abs(min($limit, 50));
 
         return BrandResource::collection(
-            Brand::sortable($request)->paginate((int) $limit)
+            Brand::sortable($request)->paginate((int) $limit)->withQueryString()
         );
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -37,7 +29,11 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $brand = Brand::create($validated);
+
+        return BrandResource::make($brand);
     }
 
     /**
@@ -46,14 +42,6 @@ class BrandController extends Controller
     public function show(Brand $brand)
     {
         return new BrandResource($brand);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Brand $brand)
-    {
-        //
     }
 
     /**

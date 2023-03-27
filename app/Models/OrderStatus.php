@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderStatus extends Model
 {
-    use HasFactory;
+    use Uuids;
+
+    protected $fillable = [
+        'title',
+    ];
 }

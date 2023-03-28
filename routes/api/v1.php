@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\BrandController;
+use App\Http\Controllers\Api\v1\CategoryController;
 // use App\Http\Controllers\Api\v1\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,9 @@ Route::post('brand/create', [BrandController::class, 'store']);
 Route::get('brand/{brand}', [BrandController::class, 'show']);
 Route::put('brand/{brand}', [BrandController::class, 'update']);
 Route::delete('brand/{brand}', [BrandController::class, 'destroy']);
+
+Route::get('categories', [CategoryController::class, 'index']);
+Route::post('category/create', [CategoryController::class, 'store']);
+Route::get('category/{category}', [CategoryController::class, 'show']);
+Route::put('category/{category}', [CategoryController::class, 'update']);
+Route::delete('category/{category}', [CategoryController::class, 'destroy']);

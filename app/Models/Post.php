@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Sortable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,13 +11,13 @@ use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model
 {
-    use HasFactory, Uuids, HasSlug;
+    use HasFactory, Uuids, HasSlug, Sortable;
 
     protected $fillable = [
         'title',
         'slug',
         'content',
-        'metadata'
+        'metadata',
     ];
 
     protected $casts = [

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\BrandController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\OrderStatusController;
+use App\Http\Controllers\Api\v1\MainController;
 // use App\Http\Controllers\Api\v1\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,10 @@ Route::get('/', function () {
 // Route::post('register', [AuthController::class, 'register']);
 // Route::post('password/otp', [AuthController::class, 'password_otp']);
 // Route::post('password/reset', [AuthController::class, 'password_reset']);
+
+Route::get('main/promotions', [MainController::class, 'promotions']);
+Route::get('main/blog', [MainController::class, 'blog']);
+Route::get('main/blog/{post}', [MainController::class, 'post']);
 
 Route::get('brands', [BrandController::class, 'index']);
 Route::post('brand/create', [BrandController::class, 'store']);

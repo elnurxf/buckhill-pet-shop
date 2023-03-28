@@ -55,3 +55,13 @@ Route::delete('order-status/{orderStatus}', [OrderStatusController::class, 'dest
 
 Route::post('file/upload', [FileController::class, 'store']);
 Route::get('file/{file}', [FileController::class, 'show']);
+
+// Products
+
+// Payments
+
+// Orders
+
+// User
+
+// Admin

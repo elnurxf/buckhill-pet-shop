@@ -1,27 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
-use App\Models\OrderStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderStatusRequest;
 use App\Http\Requests\UpdateOrderStatusRequest;
+use App\Http\Resources\OrderStatusResource;
+use App\Models\OrderStatus;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 
 class OrderStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $limit = $request->filled('limit') ? (int) $request->get('limit') : 10;
+        $limit = abs(min($limit, 50));
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return OrderStatusResource::collection(
+            OrderStatus::sortable($request)->paginate($limit)->withQueryString()
+        );
     }
 
     /**
@@ -29,7 +32,11 @@ class OrderStatusController extends Controller
      */
     public function store(StoreOrderStatusRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $orderStatus = OrderStatus::create($validated);
+
+        return OrderStatusResource::make($orderStatus);
     }
 
     /**
@@ -37,15 +44,7 @@ class OrderStatusController extends Controller
      */
     public function show(OrderStatus $orderStatus)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(OrderStatus $orderStatus)
-    {
-        //
+        return OrderStatusResource::make($orderStatus);
     }
 
     /**
@@ -53,7 +52,11 @@ class OrderStatusController extends Controller
      */
     public function update(UpdateOrderStatusRequest $request, OrderStatus $orderStatus)
     {
-        //
+        $validated = $request->validated();
+
+        $orderStatus->update($validated);
+
+        return OrderStatusResource::make($orderStatus);
     }
 
     /**
@@ -61,6 +64,13 @@ class OrderStatusController extends Controller
      */
     public function destroy(OrderStatus $orderStatus)
     {
-        //
+        $orderStatus->delete();
+
+        return new JsonResponse([
+            'success' => true,
+            'error'   => null,
+            'errors'  => [],
+            'extra'   => [],
+        ], Response::HTTP_OK);
     }
 }

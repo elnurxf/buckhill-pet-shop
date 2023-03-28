@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Sortable;
 use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use App\Traits\Sortable;
 
 class Category extends Model
 {

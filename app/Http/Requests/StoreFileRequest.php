@@ -11,7 +11,7 @@ class StoreFileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'file' => [
+                'required',
+                'image',
+                'mimes:jpg,png,jpeg',
+                'max:2048',
+            ],
         ];
     }
 }

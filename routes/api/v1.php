@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\v1\BrandController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\OrderStatusController;
 use App\Http\Controllers\Api\v1\MainController;
+use App\Http\Controllers\Api\v1\FileController;
 // use App\Http\Controllers\Api\v1\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,3 +52,6 @@ Route::post('order-status/create', [OrderStatusController::class, 'store']);
 Route::get('order-status/{orderStatus}', [OrderStatusController::class, 'show']);
 Route::put('order-status/{orderStatus}', [OrderStatusController::class, 'update']);
 Route::delete('order-status/{orderStatus}', [OrderStatusController::class, 'destroy']);
+
+Route::post('file/upload', [FileController::class, 'store']);
+Route::get('file/{file}', [FileController::class, 'show']);

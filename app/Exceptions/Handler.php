@@ -10,8 +10,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -60,89 +60,97 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function render($request, Throwable $exception)
     {
         //if ($request->expectsJson()) {
 
-            if ($exception instanceof NotFoundHttpException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'data'    => [],
-                    'code'    => Response::HTTP_NOT_FOUND,
-                    'error'   => __('Endpoint not found'),
-                    'errors'  => [],
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_NOT_FOUND);
-            }
+        if ($exception instanceof NotFoundHttpException) {
+            return new JsonResponse([
+                'success' => false,
+                'data'    => [],
+                'code'    => Response::HTTP_NOT_FOUND,
+                'error'   => __('Endpoint not found'),
+                'errors'  => [],
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_NOT_FOUND);
+        }
 
-            if ($exception instanceof ModelNotFoundException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'data'    => [],
-                    'code'    => Response::HTTP_NOT_FOUND,
-                    'error'   => __('Record not found'),
-                    'errors'  => [],
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_NOT_FOUND);
-            }
+        if ($exception instanceof ModelNotFoundException) {
+            return new JsonResponse([
+                'success' => false,
+                'data'    => [],
+                'code'    => Response::HTTP_NOT_FOUND,
+                'error'   => __('Record not found'),
+                'errors'  => [],
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_NOT_FOUND);
+        }
 
-            if ($exception instanceof AccessDeniedHttpException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'data'    => [],
-                    'code'    => Response::HTTP_FORBIDDEN,
-                    'error'   => __('You don`t have access to this route'),
-                    'errors'  => [],
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_FORBIDDEN);
-            }
+        if ($exception instanceof AccessDeniedHttpException) {
+            return new JsonResponse([
+                'success' => false,
+                'data'    => [],
+                'code'    => Response::HTTP_FORBIDDEN,
+                'error'   => __('You don`t have access to this route'),
+                'errors'  => [],
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_FORBIDDEN);
+        }
 
-            if ($exception instanceof ValidationException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'code'    => Response::HTTP_UNPROCESSABLE_ENTITY,
-                    'error'   => __('Validation exception'),
-                    'errors'  => $exception->errors(),
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+        if ($exception instanceof ValidationException) {
+            return new JsonResponse([
+                'success' => false,
+                'code'    => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'error'   => __('Validation exception'),
+                'errors'  => $exception->errors(),
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
-            if ($exception instanceof AuthenticationException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'data'    => [],
-                    'code'    => Response::HTTP_UNAUTHORIZED,
-                    'error'   => __('Unauthenticated'),
-                    'errors'  => [],
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_UNAUTHORIZED);
-            }
+        if ($exception instanceof AuthenticationException) {
+            return new JsonResponse([
+                'success' => false,
+                'data'    => [],
+                'code'    => Response::HTTP_UNAUTHORIZED,
+                'error'   => __('Unauthenticated'),
+                'errors'  => [],
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_UNAUTHORIZED);
+        }
 
-            if ($exception instanceof ThrottleRequestsException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'data'    => [],
-                    'code'    => Response::HTTP_TOO_MANY_REQUESTS,
-                    'error'   => __('Too Many Requests'),
-                    'errors'  => [],
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_TOO_MANY_REQUESTS);
-            }
+        if ($exception instanceof ThrottleRequestsException) {
+            return new JsonResponse([
+                'success' => false,
+                'data'    => [],
+                'code'    => Response::HTTP_TOO_MANY_REQUESTS,
+                'error'   => __('Too Many Requests'),
+                'errors'  => [],
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_TOO_MANY_REQUESTS);
+        }
 
-            if ($exception instanceof MethodNotAllowedHttpException) {
-                return new JsonResponse([
-                    'success' => false,
-                    'data'    => [],
-                    'code'    => Response::HTTP_METHOD_NOT_ALLOWED,
-                    'error'   => __('Method Not Allowed'),
-                    'errors'  => [],
-                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
-                ], Response::HTTP_METHOD_NOT_ALLOWED);
-            }
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return new JsonResponse([
+                'success' => false,
+                'data'    => [],
+                'code'    => Response::HTTP_METHOD_NOT_ALLOWED,
+                'error'   => __('Method Not Allowed'),
+                'errors'  => [],
+                'trace'   => config('app.debug') ? $exception->getTrace() : [],
+            ], Response::HTTP_METHOD_NOT_ALLOWED);
+        }
         //}
 
-        return parent::render($request, $exception);
+        return new JsonResponse([
+            'success' => false,
+            'data'    => [],
+            'code'    => Response::HTTP_INTERNAL_SERVER_ERROR,
+            'error'   => __('Something went wrong'),
+            'errors'  => [],
+            'trace'   => config('app.debug') ? $exception->getTrace() : [],
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 }

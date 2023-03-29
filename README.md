@@ -29,3 +29,11 @@ To run tests
 ```bash
 composer test
 ```
+
+## Analyze with Larastan
+
+To run analyzer
+
+```bash
+composer analyse
+```

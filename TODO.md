@@ -2,7 +2,7 @@
 
 # Top priority
 Required packages:
-	nunomaduro/larastan
++	nunomaduro/larastan
 	nunomaduro/phpinsights
 +	barryvdh/laravel-ide-helper
 +	tymondesigns/jwt-auth

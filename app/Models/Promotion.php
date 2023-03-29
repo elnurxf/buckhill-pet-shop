@@ -44,6 +44,13 @@ class Promotion extends Model
         'metadata',
     ];
 
+    public $sortables = [
+        'id',
+        'title',
+        'created_at',
+        'updated_at',
+    ];
+
     protected $casts = [
         'metadata' => 'json',
     ];

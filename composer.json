@@ -10,6 +10,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.8",
+        "lcobucci/jwt": "^4.3",
         "propaganistas/laravel-phone": "^5.0",
         "spatie/laravel-sluggable": "^3.4",
         "tymon/jwt-auth": "^2.0"

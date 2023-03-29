@@ -5,7 +5,8 @@ Required packages:
 +	nunomaduro/larastan
 	nunomaduro/phpinsights
 +	barryvdh/laravel-ide-helper
-+	tymondesigns/jwt-auth
+-	tymondesigns/jwt-auth
++	lcobucci/jwt
 +	darkaonline/l5-swagger
 +	propaganistas/laravel-phone
 +	spatie/laravel-sluggable

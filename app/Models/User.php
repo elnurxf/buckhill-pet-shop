@@ -7,7 +7,8 @@ use App\Traits\Uuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+// use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Models\User
@@ -52,9 +53,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUuid($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable, Uuids;
+    use HasFactory, Notifiable, Uuids;
 
     /**
      * The attributes that are mass assignable.
@@ -72,6 +73,7 @@ class User extends Authenticatable
         'address',
         'phone_number',
         'is_marketing',
+        'last_login_at',
     ];
 
     /**
@@ -92,6 +94,32 @@ class User extends Authenticatable
     protected $casts = [
         'is_admin'          => 'boolean',
         'email_verified_at' => 'datetime',
+        'last_login_at'     => 'datetime',
         'is_marketing'      => 'boolean',
     ];
+
+    public function avatar()
+    {
+        return $this->belongsTo(File::class, 'avatar');
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

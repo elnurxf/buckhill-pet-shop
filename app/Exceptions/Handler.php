@@ -5,11 +5,13 @@ namespace App\Exceptions;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -62,7 +64,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($request->expectsJson()) {
+        //if ($request->expectsJson()) {
 
             if ($exception instanceof NotFoundHttpException) {
                 return new JsonResponse([
@@ -117,7 +119,29 @@ class Handler extends ExceptionHandler
                     'trace'   => config('app.debug') ? $exception->getTrace() : [],
                 ], Response::HTTP_UNAUTHORIZED);
             }
-        }
+
+            if ($exception instanceof ThrottleRequestsException) {
+                return new JsonResponse([
+                    'success' => false,
+                    'data'    => [],
+                    'code'    => Response::HTTP_TOO_MANY_REQUESTS,
+                    'error'   => __('Too Many Requests'),
+                    'errors'  => [],
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
+                ], Response::HTTP_TOO_MANY_REQUESTS);
+            }
+
+            if ($exception instanceof MethodNotAllowedHttpException) {
+                return new JsonResponse([
+                    'success' => false,
+                    'data'    => [],
+                    'code'    => Response::HTTP_METHOD_NOT_ALLOWED,
+                    'error'   => __('Method Not Allowed'),
+                    'errors'  => [],
+                    'trace'   => config('app.debug') ? $exception->getTrace() : [],
+                ], Response::HTTP_METHOD_NOT_ALLOWED);
+            }
+        //}
 
         return parent::render($request, $exception);
     }

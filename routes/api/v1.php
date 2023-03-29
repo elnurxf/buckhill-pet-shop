@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\OrderStatusController;
 use App\Http\Controllers\Api\v1\MainController;
 use App\Http\Controllers\Api\v1\FileController;
-// use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +26,22 @@ Route::get('/', function () {
     ], 200);
 });
 
-// Route::post('login', [AuthController::class, 'login']);
-// Route::post('register', [AuthController::class, 'register']);
-// Route::post('password/otp', [AuthController::class, 'password_otp']);
-// Route::post('password/reset', [AuthController::class, 'password_reset']);
+
+Route::prefix('user')->group(function () {
+
+    Route::get('/', [UserController::class, 'me']);
+
+    Route::post('login', [AuthController::class, 'login']);
+    Route::get('logout', [AuthController::class, 'logout']);
+
+    //Route::post('create', [AuthController::class, 'store']);
+    //Route::delete('/', [UserController::class, 'destroy']);
+    //Route::put('edit', [UserController::class, 'update']);
+    //Route::get('orders', [UserController::class, 'orders']);
+    //Route::post('forgot-password', [UserController::class, 'forgot_password']);
+    //Route::post('reset-password-token', [UserController::class, 'reset_password_token']);
+
+});
 
 Route::get('main/promotions', [MainController::class, 'promotions']);
 Route::get('main/blog', [MainController::class, 'blog']);
@@ -55,6 +67,10 @@ Route::delete('order-status/{orderStatus}', [OrderStatusController::class, 'dest
 
 Route::post('file/upload', [FileController::class, 'store']);
 Route::get('file/{file}', [FileController::class, 'show']);
+
+Route::middleware(['auth:api'])->group(function () {
+
+});
 
 // Products
 

@@ -3,10 +3,10 @@
 # Top priority
 Required packages:
 	nunomaduro/larastan
+	nunomaduro/phpinsights
 +	barryvdh/laravel-ide-helper
 +	tymondesigns/jwt-auth
-	nunomaduro/phpinsights
-	darkaonline/l5-swagger
++	darkaonline/l5-swagger
 +	propaganistas/laravel-phone
 +	spatie/laravel-sluggable
 +	laravel-lang/common

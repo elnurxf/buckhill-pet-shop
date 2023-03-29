@@ -17,6 +17,6 @@ Route::get('/', function () {
     return response()->noContent();
 });
 
-Route::prefix('v1')->namespace('v1')->name('v1.')->group(function () {
+Route::prefix('v1')->namespace('v1')->name('v1.')->middleware('throttle:60,1')->group(function () {
     require __DIR__ . '/api/v1.php';
 });

@@ -12,8 +12,7 @@
         "laravel/tinker": "^2.8",
         "lcobucci/jwt": "^4.3",
         "propaganistas/laravel-phone": "^5.0",
-        "spatie/laravel-sluggable": "^3.4",
-        "tymon/jwt-auth": "^2.0"
+        "spatie/laravel-sluggable": "^3.4"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",

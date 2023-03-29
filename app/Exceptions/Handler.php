@@ -147,7 +147,7 @@ class Handler extends ExceptionHandler
             'success' => false,
             'data'    => [],
             'code'    => Response::HTTP_INTERNAL_SERVER_ERROR,
-            'error'   => __('Something went wrong'),
+            'error'   => $exception->getMessage(),
             'errors'  => [],
             'trace'   => config('app.debug') ? $exception->getTrace() : [],
         ], Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -30,16 +30,21 @@ Route::get('/', function () {
 
 Route::prefix('user')->group(function () {
 
-    Route::get('/', [AuthController::class, 'me']);
     Route::post('login', [AuthController::class, 'login']);
-    Route::get('logout', [AuthController::class, 'logout']);
 
-    Route::delete('/', [UserController::class, 'destroy']);
-    Route::post('create', [UserController::class, 'store']);
-    Route::put('edit', [UserController::class, 'update']);
-    Route::get('orders', [UserController::class, 'orders']);
-    Route::post('forgot-password', [UserController::class, 'forgot_password']);
-    Route::post('reset-password-token', [UserController::class, 'reset_password_token']);
+    Route::middleware('jwt')->group(function () {
+
+        Route::get('/', [AuthController::class, 'me']);
+        Route::get('logout', [AuthController::class, 'logout']);
+
+        Route::delete('/', [UserController::class, 'destroy']);
+        Route::post('create', [UserController::class, 'store']);
+        Route::put('edit', [UserController::class, 'update']);
+        Route::get('orders', [UserController::class, 'orders']);
+        Route::post('forgot-password', [UserController::class, 'forgot_password']);
+        Route::post('reset-password-token', [UserController::class, 'reset_password_token']);
+
+    });
 
 });
 

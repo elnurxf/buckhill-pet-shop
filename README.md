@@ -17,7 +17,6 @@ Copy .env.example to .env file, set DB credentials and run migrations and seed d
 ```bash
 composer install
 php artisan key:generate
-php artisan jwt:secret
 php artisan storage:link
 php artisan migrate:fresh --seed
 ```

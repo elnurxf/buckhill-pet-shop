@@ -24,10 +24,10 @@ class UserFactory extends Factory
         return [
             'first_name'        => $this->faker->firstName(),
             'last_name'         => $this->faker->lastName(),
-            'is_admin'          => $this->faker->boolean(),
+            'is_admin'          => false,
             'email'             => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password'          => Hash::make('password'),
+            'password'          => Hash::make('userpassword'),
             'avatar'            => $avatar->uuid,
             'address'           => $this->faker->address(),
             'phone_number'      => $this->faker->phoneNumber(),

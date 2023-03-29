@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\OrderStatusController;
 use App\Http\Controllers\Api\v1\MainController;
 use App\Http\Controllers\Api\v1\FileController;
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,17 +30,16 @@ Route::get('/', function () {
 
 Route::prefix('user')->group(function () {
 
-    Route::get('/', [UserController::class, 'me']);
-
+    Route::get('/', [AuthController::class, 'me']);
     Route::post('login', [AuthController::class, 'login']);
     Route::get('logout', [AuthController::class, 'logout']);
 
-    //Route::post('create', [AuthController::class, 'store']);
-    //Route::delete('/', [UserController::class, 'destroy']);
-    //Route::put('edit', [UserController::class, 'update']);
-    //Route::get('orders', [UserController::class, 'orders']);
-    //Route::post('forgot-password', [UserController::class, 'forgot_password']);
-    //Route::post('reset-password-token', [UserController::class, 'reset_password_token']);
+    Route::delete('/', [UserController::class, 'destroy']);
+    Route::post('create', [UserController::class, 'store']);
+    Route::put('edit', [UserController::class, 'update']);
+    Route::get('orders', [UserController::class, 'orders']);
+    Route::post('forgot-password', [UserController::class, 'forgot_password']);
+    Route::post('reset-password-token', [UserController::class, 'reset_password_token']);
 
 });
 

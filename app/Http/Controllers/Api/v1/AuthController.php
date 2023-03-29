@@ -10,6 +10,7 @@ use App\Models\Brand;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -40,6 +41,8 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
+        event(new Login('api', auth()->user(), false));
 
         return $this->respondWithToken($token);
     }

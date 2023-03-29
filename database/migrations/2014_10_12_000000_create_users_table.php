@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->boolean('is_marketing');
             $table->rememberToken();
-            $table->timestamp('last_login_ip')->nullable();
+            $table->string('last_login_ip')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });

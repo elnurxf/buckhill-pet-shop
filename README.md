@@ -7,7 +7,7 @@ API has been written using Laravel 10 for Buckhill final technical task
 Clone this project.
 
 ```bash
-git@github.com:elnurxf/buckhill-pet-shop.git
+git clone https://github.com/elnurxf/buckhill-pet-shop.git
 ```
 
 ## Installation
@@ -20,6 +20,12 @@ php artisan key:generate
 php artisan storage:link
 php artisan migrate:fresh --seed
 ```
+
+## Create keys for JWT
+
+```bash
+ssh-keygen -b 2048 -t rsa -f storage/app/jwt-keys/jwtRS256.key -q -N '""'
+````
 
 ## Running Tests
 

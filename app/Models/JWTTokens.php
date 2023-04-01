@@ -41,6 +41,8 @@ class JWTTokens extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'restrictions' => 'array',
+        'permissions'  => 'array',
         'created_at'   => 'datetime',
         'updated_at'   => 'datetime',
         'expires_at'   => 'datetime',

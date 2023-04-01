@@ -22,6 +22,7 @@ class CheckJWTAuthToken
     {
         $clientToken = $request->bearerToken();
 
+
         try {
 
             $parser = new Parser(new JoseEncoder());
@@ -29,8 +30,11 @@ class CheckJWTAuthToken
 
             $validator = new Validator();
 
-            var_dump($token->claims()->get('user_uuid'));
-            //var_dump($token->claims()->all());
+            dd($validator);
+
+
+            //var_dump($token->claims()->get('user_uuid'));
+            var_dump(1, $token->claims()->all());
 
         } catch (\Exception $exception) {
 

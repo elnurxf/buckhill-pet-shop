@@ -12,10 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Lcobucci\JWT\Encoding\ChainedFormatter;
-use Lcobucci\JWT\Encoding\JoseEncoder;
-//use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Ecdsa\Sha256; // Asymmetric algorithm
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer;
+use Lcobucci\JWT\Signer\Ecdsa\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\Builder;
 
@@ -61,23 +60,27 @@ class AuthController extends Controller
         }
 
         // Generate JWT Token
-        $tokenBuilder = new Builder(new JoseEncoder(), ChainedFormatter::default());
-        $algorithm    = new Sha256();
-        $signingKey   = InMemory::plainText(config('app.key'));
-        $now          = new \DateTimeImmutable();
+        $configuration = Configuration::forAsymmetricSigner(
+            new Signer\Rsa\Sha256(),
+            InMemory::file(storage_path('app/jwt-keys/jwtRS256.key')),
+            InMemory::plainText(config('app.key'))
+        );
 
-        $token = $tokenBuilder->issuedBy(parse_url(config('app.url'), PHP_URL_HOST))
+        $now = new \DateTimeImmutable();
+
+        $token = $configuration->builder()
+            ->issuedBy(parse_url(config('app.url'), PHP_URL_HOST))
             ->permittedFor(config('app.url'))
-            ->identifiedBy('4f1g23a12aa')
+            ->identifiedBy(hash_hmac('sha256', random_bytes(16), config('app.key')))
             ->issuedAt($now)
             ->expiresAt($now->modify('+1 hour'))
             ->withClaim('user_uuid', $user->uuid)
-            ->getToken($algorithm, $signingKey);
+            ->getToken($configuration->signer(), $configuration->signingKey());
 
         // Store newly genrated token
-        JWTTokens::create([
+        $jwt = JWTTokens::create([
             'user_id'      => $user->id,
-            'unique_id'    => $token->toString(),
+            'unique_id'    => $token->signature()->toString(),
             'token_title'  => 'Token for user ' . $user->uuid,
             'restrictions' => [
                 'admin' => !$user->is_admin,
@@ -97,7 +100,7 @@ class AuthController extends Controller
         return new JsonResponse([
             'success' => true,
             'code'    => Response::HTTP_OK,
-            'token'   => $token->toString(),
+            'token'   => $jwt->unique_id,
         ], Response::HTTP_OK);
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id'); // could not be string according to the docs
-            $table->string('unique_id')->unique();
+            $table->text('unique_id');
             $table->string('token_title');
             $table->json('restrictions')->nullable();
             $table->json('permissions')->nullable();

@@ -17,6 +17,9 @@ use Lcobucci\JWT\Signer;
 use Lcobucci\JWT\Signer\Ecdsa\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\Builder;
+use Lcobucci\JWT\Encoding\ChainedFormatter;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Carbon\CarbonImmutable;
 
 class AuthController extends Controller
 {
@@ -66,16 +69,18 @@ class AuthController extends Controller
             InMemory::plainText(config('app.key'))
         );
 
-        $now = new \DateTimeImmutable();
+        $tokenBuilder = (new Builder(new JoseEncoder(), ChainedFormatter::default()));
 
-        $token = $configuration->builder()
+        $token = $tokenBuilder
             ->issuedBy(parse_url(config('app.url'), PHP_URL_HOST))
             ->permittedFor(config('app.url'))
             ->identifiedBy(hash_hmac('sha256', random_bytes(16), config('app.key')))
-            ->issuedAt($now)
-            ->expiresAt($now->modify('+1 hour'))
+            ->issuedAt(CarbonImmutable::now())
+            ->expiresAt(CarbonImmutable::now()->addHour())
             ->withClaim('user_uuid', $user->uuid)
             ->getToken($configuration->signer(), $configuration->signingKey());
+
+        var_dump($token);
 
         // Store newly genrated token
         $jwt = JWTTokens::create([

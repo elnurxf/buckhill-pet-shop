@@ -22,23 +22,34 @@ class CheckJWTAuthToken
     {
         $clientToken = $request->bearerToken();
 
+        var_dump(123);
 
-        try {
+        //try {
 
-            $parser = new Parser(new JoseEncoder());
+            $parser = new Parser();
             $token = $parser->parse($clientToken);
+
+            return var_dump($token);
+
+            $tokenId = $token->getHeader('jti');
 
             $validator = new Validator();
 
-            dd($validator);
-
+            $result = $validator->validate(
+                $token,
+                new SignedWith(
+                    new Signer\Rsa\Sha256(),
+                    InMemory::file(storage_path('app/jwt-keys/jwtRS256.key')),
+                    InMemory::plainText(config('app.key'))
+                )
+            );
 
             //var_dump($token->claims()->get('user_uuid'));
-            var_dump(1, $token->claims()->all());
+            var_dump($result, $token->claims()->all());
 
-        } catch (\Exception $exception) {
+        //} catch (\Exception $exception) {
 
-        }
+        //}
 
         //try {
         //    $validator->assert($token, new RelatedTo('1234567891')); // doesn't throw an exception

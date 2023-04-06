@@ -32,7 +32,7 @@ Route::prefix('user')->group(function () {
 
     Route::post('login', [AuthController::class, 'login']);
 
-    Route::middleware('jwt')->group(function () {
+    Route::middleware('auth:api')->group(function () {
 
         Route::get('/', [AuthController::class, 'me']);
         Route::get('logout', [AuthController::class, 'logout']);
@@ -73,7 +73,7 @@ Route::delete('order-status/{orderStatus}', [OrderStatusController::class, 'dest
 Route::post('file/upload', [FileController::class, 'store']);
 Route::get('file/{file}', [FileController::class, 'show']);
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth:api', 'jwt:admin'])->group(function () {
 
 });
 

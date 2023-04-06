@@ -5,12 +5,12 @@ Required packages:
 +	nunomaduro/larastan
 	nunomaduro/phpinsights
 +	barryvdh/laravel-ide-helper
--	composetymondesigns/jwt-auth
-+	lcobucci/jwt
++	tymondesigns/jwt-auth (depends on "lcobucci/jwt")
 +	darkaonline/l5-swagger
 +	propaganistas/laravel-phone
 +	spatie/laravel-sluggable
 +	laravel-lang/common
+	flugg/laravel-responder
 
 + Modeling (Migrations, Seeds, Indexes)
 + Controllers
@@ -26,3 +26,7 @@ JWT implementation
 OpenApi
 Tests
 Docker Container
+
+
+ssh-keygen -t rsa -b 4096 -m PEM -f storage/app/jwt-keys/jwtRS256.key
+ssh-keygen -f storage/app/jwt-keys/jwtRS256.key -e -m PKCS8 > storage/app/jwt-keys/jwtRS256.key.pub

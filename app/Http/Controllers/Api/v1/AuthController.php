@@ -44,17 +44,8 @@ class AuthController extends Controller
             ],
         ]);
 
-        $user = User::where('email', $data['email'])->first();
-
-        if (!$user) {
-            return new JsonResponse([
-                'success' => false,
-                'code'    => Response::HTTP_NOT_FOUND,
-                'message' => __('User not found'),
-            ], Response::HTTP_NOT_FOUND);
-        }
-
-        if (!Hash::check($data['password'], $user->password)) {
+        // Try to authorize
+        if (!$token = auth()->attempt($data)) {
             return new JsonResponse([
                 'success' => false,
                 'code'    => Response::HTTP_BAD_REQUEST,
@@ -62,30 +53,12 @@ class AuthController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        // Generate JWT Token
-        $configuration = Configuration::forAsymmetricSigner(
-            new Signer\Rsa\Sha256(),
-            InMemory::file(storage_path('app/jwt-keys/jwtRS256.key')),
-            InMemory::plainText(config('app.key'))
-        );
-
-        $tokenBuilder = (new Builder(new JoseEncoder(), ChainedFormatter::default()));
-
-        $token = $tokenBuilder
-            ->issuedBy(parse_url(config('app.url'), PHP_URL_HOST))
-            ->permittedFor(config('app.url'))
-            ->identifiedBy(hash_hmac('sha256', random_bytes(16), config('app.key')))
-            ->issuedAt(CarbonImmutable::now())
-            ->expiresAt(CarbonImmutable::now()->addHour())
-            ->withClaim('user_uuid', $user->uuid)
-            ->getToken($configuration->signer(), $configuration->signingKey());
-
-        var_dump($token);
+        $user = auth()->user();
 
         // Store newly genrated token
         $jwt = JWTTokens::create([
             'user_id'      => $user->id,
-            'unique_id'    => $token->signature()->toString(),
+            'unique_id'    => $token,
             'token_title'  => 'Token for user ' . $user->uuid,
             'restrictions' => [
                 'admin' => !$user->is_admin,
@@ -105,7 +78,7 @@ class AuthController extends Controller
         return new JsonResponse([
             'success' => true,
             'code'    => Response::HTTP_OK,
-            'token'   => $jwt->unique_id,
+            'token'   => $token,
         ], Response::HTTP_OK);
     }
 

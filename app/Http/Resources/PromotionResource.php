@@ -3,11 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class PromotionResource extends JsonResource
+class PromotionResource extends CommonResource
 {
-    public static $wrap = 'data';
 
     /**
      * Transform the resource into an array.
@@ -26,13 +24,4 @@ class PromotionResource extends JsonResource
         ];
     }
 
-    public function with(Request $request): array
-    {
-        return [
-            'success' => true,
-            'error'   => null,
-            'errors'  => [],
-            'extra'   => [],
-        ];
-    }
 }

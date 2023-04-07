@@ -3,11 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class CategoryResource extends CommonResource
 {
-    public static $wrap = 'data';
 
     /**
      * Transform the resource into an array.
@@ -25,13 +23,4 @@ class CategoryResource extends JsonResource
         ];
     }
 
-    public function with(Request $request): array
-    {
-        return [
-            'success' => true,
-            'error'   => null,
-            'errors'  => [],
-            'extra'   => [],
-        ];
-    }
 }

@@ -29,6 +29,16 @@ ssh-keygen -b 4096 -m PEM -t rsa -f storage/app/jwt-keys/jwtRS256.key
 ssh-keygen -e -m PEM -f storage/app/jwt-keys/jwtRS256.key > storage/app/jwt-keys/jwtRS256.key.pub
 ````
 
+## Default access
+
+For admin:
+Login: admin@buckhill.co.uk
+Password: admin
+
+For regular users:
+any email from seeders
+Password: userpassword
+
 ## Running Tests
 
 To run tests

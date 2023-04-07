@@ -3,11 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderStatusResource extends JsonResource
+class OrderStatusResource extends CommonResource
 {
-    public static $wrap = 'data';
 
     /**
      * Transform the resource into an array.
@@ -24,13 +22,4 @@ class OrderStatusResource extends JsonResource
         ];
     }
 
-    public function with(Request $request): array
-    {
-        return [
-            'success' => true,
-            'error'   => null,
-            'errors'  => [],
-            'extra'   => [],
-        ];
-    }
 }

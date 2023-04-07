@@ -10,7 +10,7 @@ Required packages:
 +	propaganistas/laravel-phone
 +	spatie/laravel-sluggable
 +	laravel-lang/common
-	flugg/laravel-responder
+-	flugg/laravel-responder
 
 + Modeling (Migrations, Seeds, Indexes)
 + Controllers
@@ -20,9 +20,9 @@ Required packages:
 Make common response for unifications
 
 # Low priority
-Middleware only admins
-Token Middleware
-JWT implementation
++ Middleware only admins
++ Token Middleware
++ JWT implementation
 OpenApi
 Tests
 Docker Container

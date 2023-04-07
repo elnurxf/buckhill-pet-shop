@@ -68,7 +68,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof NotFoundHttpException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'data'    => [],
                 'code'    => Response::HTTP_NOT_FOUND,
                 'error'   => __('Endpoint not found'),
@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ModelNotFoundException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'data'    => [],
                 'code'    => Response::HTTP_NOT_FOUND,
                 'error'   => __('Record not found'),
@@ -90,7 +90,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof AccessDeniedHttpException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'data'    => [],
                 'code'    => Response::HTTP_FORBIDDEN,
                 'error'   => __('You don`t have access to this route'),
@@ -101,7 +101,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ValidationException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'code'    => Response::HTTP_UNPROCESSABLE_ENTITY,
                 'error'   => __('Validation exception'),
                 'errors'  => $exception->errors(),
@@ -111,10 +111,10 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof AuthenticationException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'data'    => [],
                 'code'    => Response::HTTP_UNAUTHORIZED,
-                'error'   => __('Unauthenticated'),
+                'error'   => __('Unauthorized'),
                 'errors'  => [],
                 'trace'   => config('app.debug') ? $exception->getTrace() : [],
             ], Response::HTTP_UNAUTHORIZED);
@@ -122,7 +122,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ThrottleRequestsException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'data'    => [],
                 'code'    => Response::HTTP_TOO_MANY_REQUESTS,
                 'error'   => __('Too Many Requests'),
@@ -133,7 +133,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof MethodNotAllowedHttpException) {
             return new JsonResponse([
-                'success' => false,
+                'success' => 0,
                 'data'    => [],
                 'code'    => Response::HTTP_METHOD_NOT_ALLOWED,
                 'error'   => __('Method Not Allowed'),
@@ -144,7 +144,7 @@ class Handler extends ExceptionHandler
         //}
 
         return new JsonResponse([
-            'success' => false,
+            'success' => 0,
             'data'    => [],
             'code'    => Response::HTTP_INTERNAL_SERVER_ERROR,
             'error'   => $exception->getMessage(),

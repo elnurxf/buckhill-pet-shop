@@ -3,11 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class BrandResource extends JsonResource
+class BrandResource extends CommonResource
 {
-    public static $wrap = 'data';
 
     /**
      * Transform the resource into an array.
@@ -24,17 +22,5 @@ class BrandResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
 
-        //return parent::toArray($request);
-
-    }
-
-    public function with(Request $request): array
-    {
-        return [
-            'success' => true,
-            'error'   => null,
-            'errors'  => [],
-            'extra'   => [],
-        ];
     }
 }
